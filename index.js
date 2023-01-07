@@ -17,13 +17,13 @@ mongoose
 		console.log(err.name, err.message);
 	});
 
-const connection = mongoose.connect();
+// const connection = mongoose.connect();
 
-connection.once("open", () => {
-	console.log("setting log streams");
+// connection.once("open", () => {
+// 	console.log("setting log streams");
 
-	const setSensorChangeStream = connection.collection("");
-});
+// 	const setSensorChangeStream = connection.collection("");
+// });
 app.listen(port, () => {
 	console.log(`app sucessfully connected on port ${port}`);
 });
