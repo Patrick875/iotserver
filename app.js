@@ -7,5 +7,4 @@ app.use(express.json());
 
 app.use("/api/sensor", sensor);
 
-app.post("/");
 module.exports = app;
