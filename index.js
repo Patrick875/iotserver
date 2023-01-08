@@ -1,12 +1,15 @@
 const mongoose = require("mongoose");
 const app = require("./app");
 const port = 3500;
+const server = require("http").createServer(app);
+const io = require("socket.io")(server, { cors: { origin: "*" } });
 
 mongoose
 	.connect(
 		"mongodb+srv://PatrickK:M0dKY3Jds7ZRq51v@cluster0.v0j9y.mongodb.net/iot?retryWrites=true&w=majority",
 		{
 			useNewUrlParser: true,
+
 			useUnifiedTopology: true,
 		}
 	)
@@ -17,13 +20,24 @@ mongoose
 		console.log(err.name, err.message);
 	});
 
-// const connection = mongoose.connect();
+const connection = mongoose.connection;
 
-// connection.once("open", () => {
-// 	console.log("setting log streams");
+connection.once("open", () => {
+	console.log("db connected");
+	console.log("setting streams");
 
-// 	const setSensorChangeStream = connection.collection("");
-// });
-app.listen(port, () => {
+	const sensorDataChangeStream = connection.collection("sensordatas").watch();
+
+	sensorDataChangeStream.on("change", (change) => {
+		switch (change.operationType) {
+			case "insert":
+				console.log(change);
+				io.emit("newData", change.fullDocument);
+				break;
+		}
+	});
+});
+
+server.listen(port, () => {
 	console.log(`app sucessfully connected on port ${port}`);
 });
