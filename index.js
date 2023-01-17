@@ -1,3 +1,4 @@
+//jshint esversion:9
 const mongoose = require("mongoose");
 const app = require("./app");
 const port = 3500;
@@ -9,7 +10,6 @@ mongoose
 		"mongodb+srv://PatrickK:M0dKY3Jds7ZRq51v@cluster0.v0j9y.mongodb.net/iot?retryWrites=true&w=majority",
 		{
 			useNewUrlParser: true,
-
 			useUnifiedTopology: true,
 		}
 	)
