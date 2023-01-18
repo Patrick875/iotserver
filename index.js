@@ -3,7 +3,12 @@ const mongoose = require("mongoose");
 const app = require("./app");
 const port = 3500;
 const server = require("http").createServer(app);
-const io = require("socket.io")(server);
+const io = require("socket.io")(server, {
+	cors: {
+		origin: "http://localhost:3000",
+		credentials: true,
+	},
+});
 
 mongoose
 	.connect(
