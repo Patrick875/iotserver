@@ -2,20 +2,36 @@ const express = require("express");
 const SensorData = require("../models/dataSchema");
 const router = express.Router();
 
-router.get("/", async (req, res) => {
-	try {
-		const data = await SensorData.find();
+function hasQueryParams(url) {
+	return url.indexOf("?") !== -1;
+}
 
-		if (data) {
+router.get("/", async (req, res) => {
+	const url = req.url;
+
+	try {
+		if (hasQueryParams(url)) {
+			const query = req.query;
+			const newData = await SensorData.create(query);
+
 			res.json({
-				status: 200,
-				data,
+				status: 201,
+				newData,
 			});
 		} else {
-			res.json({
-				status: 200,
-				message: "welcome",
-			});
+			const data = await SensorData.find();
+
+			if (data) {
+				res.json({
+					status: 200,
+					data,
+				});
+			} else {
+				res.json({
+					status: 200,
+					message: "welcome",
+				});
+			}
 		}
 	} catch (error) {
 		res.json({
