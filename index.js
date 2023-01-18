@@ -1,13 +1,15 @@
-//jshint esversion:9
 const mongoose = require("mongoose");
 const app = require("./app");
 const port = 3500;
 const server = require("http").createServer(app);
-const io = require("socket.io")(server, {
-	cors: {
-		origin: "http://localhost:3000",
-		credentials: true,
-	},
+const io = require("socket.io")(server, { cors: { origin: "*" } });
+
+io.on("connection", (socket) => {
+	console.log("user connected", socket.id);
+	socket.on("cool", (data) => {
+		console.log(data);
+		socket.broadcast.emit("message", "hahahaha");
+	});
 });
 
 mongoose
@@ -15,6 +17,7 @@ mongoose
 		"mongodb+srv://PatrickK:M0dKY3Jds7ZRq51v@cluster0.v0j9y.mongodb.net/iot?retryWrites=true&w=majority",
 		{
 			useNewUrlParser: true,
+
 			useUnifiedTopology: true,
 		}
 	)

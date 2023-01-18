@@ -13,12 +13,4 @@ app.use(express.json());
 
 app.use("/api/sensor", sensor);
 
-// io.on("connection", (socket) => {
-// 	console.log("user connected", socket.id);
-// 	socket.on("cool", (data) => {
-// 		console.log(data);
-// 		socket.broadcast.emit("message", "hahahaha");
-// 	});
-// });
-
 module.exports = app;
