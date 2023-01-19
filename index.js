@@ -1,7 +1,8 @@
 const mongoose = require("mongoose");
+
 const app = require("./app");
 const port = 3500;
-const server = require("http").createServer(app);
+const server = require("https").createServer(app);
 const io = require("socket.io")(server, { cors: { origin: "*" } });
 
 io.on("connection", (socket) => {
