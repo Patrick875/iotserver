@@ -3,7 +3,14 @@ const mongoose = require("mongoose");
 const app = require("./app");
 const port = 3500;
 const server = require("http").createServer({ rejectUnauthorized: false }, app);
-const io = require("socket.io")(server, { cors: { origin: "*" } });
+const io = require("socket.io")(server, {
+	cors: {
+		origin: "*",
+		methods: ["GET", "POST"],
+		allowedHeaders: ["my-custom-header"],
+		credentials: true,
+	},
+});
 
 io.on("connection", (socket) => {
 	console.log("user connected", socket.id);
