@@ -8,7 +8,7 @@ const io = require("socket.io")(server, {
 		origin: "*",
 		methods: ["GET", "POST"],
 		allowedHeaders: ["my-custom-header"],
-		credentials: true,
+		withCredentials: true,
 	},
 });
 
