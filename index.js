@@ -61,7 +61,7 @@ connection.once("open", () => {
 		switch (change.operationType) {
 			case "insert":
 				console.log(change);
-				io.emit("newData", change.fullDocument);
+				wss.emit("newData", change.fullDocument);
 				break;
 		}
 	});
