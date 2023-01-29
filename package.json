@@ -4,7 +4,7 @@
   "description": "testing server data upload",
   "main": "server.js",
   "scripts": {
-    "start": "nodemon index.js"
+    "start": "node index.js"
   },
   "keywords": [
     "iot",
