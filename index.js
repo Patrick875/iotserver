@@ -1,25 +1,38 @@
 const mongoose = require("mongoose");
 
 const app = require("./app");
-const port = 3500;
-const server = require("http").createServer({ rejectUnauthorized: false }, app);
-const io = require("socket.io")(server, {
-	cors: {
-		origin: "*",
-		methods: ["GET", "POST"],
-		allowedHeaders: ["my-custom-header"],
-		withCredentials: true,
-	},
-});
+const port = process.env.PORT || 3500;
+//const server = require("http").createServer({ rejectUnauthorized: false }, app);
+const { createServer } = require("http");
 
-io.on("connection", (socket) => {
+const webSocket = require("ws");
+// const io = require("socket.io")(server, {
+// 	cors: {
+// 		origin: "*",
+// 		methods: ["GET", "POST"],
+// 		allowedHeaders: ["my-custom-header"],
+// 		withCredentials: true,
+// 	},
+// });
+
+// io.on("connection", (socket) => {
+// 	console.log("user connected", socket.id);
+// 	socket.on("cool", (data) => {
+// 		console.log(data);
+// 		socket.broadcast.emit("message", "hahahaha");
+// 	});
+// });
+
+const server = createServer(app);
+const wss = new webSocket.Server({ server });
+
+wss.on("connection", (socket) => {
 	console.log("user connected", socket.id);
 	socket.on("cool", (data) => {
 		console.log(data);
 		socket.broadcast.emit("message", "hahahaha");
 	});
 });
-
 mongoose
 	.connect(
 		"mongodb+srv://PatrickK:M0dKY3Jds7ZRq51v@cluster0.v0j9y.mongodb.net/iot?retryWrites=true&w=majority",
