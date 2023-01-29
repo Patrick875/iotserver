@@ -4,16 +4,10 @@ const cors = require("cors");
 const sensor = require("./api/sensor");
 const app = express();
 
-var whitelist = ["http://localhost:3000"];
+//var whitelist = ["http://127.0.0.1:3000"];
 var corsOptions = {
 	credentials: true,
-	origin: function (origin, callback) {
-		if (whitelist.indexOf(origin) !== -1) {
-			callback(null, true);
-		} else {
-			callback(new Error("Not allowed by CORS"));
-		}
-	},
+	origin: "http://127.0.0.1:3000",
 };
 
 app.use(cors(corsOptions));
