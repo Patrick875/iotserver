@@ -7,7 +7,7 @@ const app = express();
 //var whitelist = ["http://127.0.0.1:3000"];
 var corsOptions = {
 	credentials: true,
-	origin: "http://127.0.0.1:3000",
+	origin: "https://candid-cocada-6b5371.netlify.app/",
 };
 
 app.use(cors(corsOptions));
